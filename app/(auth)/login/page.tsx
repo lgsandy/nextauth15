@@ -17,8 +17,8 @@ function Login() {
         body: JSON.stringify({ token: token }),
       });
       const content = await rawResponse.json();
-
       console.log(content);
+      router.push("/admin");
       // // Set the token as a cookie
       // (
       //   await // Set the token as a cookie
@@ -30,8 +30,6 @@ function Login() {
       //   path: "/",
       //   maxAge: 60 * 60 * 24 * 7,
       // });
-
-      router.push("/admin");
     } catch (error) {
       console.error("Login error:", error);
     }
