@@ -13,25 +13,36 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import MultipleSelector from "@/components/shared/multi-select";
+import { useState } from "react";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
   password: z.string().min(2).max(8),
 });
-
+const frameworks = [
+  { id: "next.js", text: "Next.js" },
+  { id: "sveltekit", text: "SvelteKit" },
+  { id: "nuxt.js", text: "Nuxt.js" },
+  { id: "remix", text: "Remix" },
+  { id: "astro", text: "Astro" },
+];
 export default function Home() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
+      password: "",
     },
   });
-
+  const [selectedFrameworks, setSelectedFrameworks] = useState<
+    { id: string; text: string }[]
+  >([]);
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
   }
   return (
-    <div className="flex justify-center items-center px-2 py-2 h-screen">
+    <div className="flex justify-center items-center gap-2 px-2 py-2 h-screen">
       <Button>Test</Button>
       <div className="w-1/6">
         <CustomCard title="Login ">
@@ -71,6 +82,20 @@ export default function Home() {
             </form>
           </Form>
         </CustomCard>
+      </div>
+      <div className="py-5 flex justify-center">
+        <MultipleSelector
+          options={frameworks}
+          selectedValues={selectedFrameworks.map((item) => item.id)}
+          onChange={(selected) =>
+            setSelectedFrameworks(selected as typeof frameworks)
+          }
+          returnObjects={true}
+          valueKey="id"
+          labelKey="text"
+          placeholder="Select frameworks..."
+        />
+        {JSON.stringify(selectedFrameworks)}
       </div>
     </div>
   );
