@@ -29,9 +29,7 @@ export default function CustomCard({
         </CardHeader>
       )}
 
-      <CardContent>
-        <p>{children}</p>
-      </CardContent>
+      <CardContent>{children}</CardContent>
       {footer && (
         <CardFooter>
           <p>{footer}</p>
